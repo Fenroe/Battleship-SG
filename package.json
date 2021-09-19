@@ -20,6 +20,7 @@
   "homepage": "https://github.com/Fenroe/Battleship-SG#readme",
   "devDependencies": {
     "@babel/preset-env": "^7.15.6",
+    "alphabet": "^1.0.0",
     "css-loader": "^6.3.0",
     "csv-loader": "^3.0.3",
     "jest": "^27.2.0",
