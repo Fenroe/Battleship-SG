@@ -2,7 +2,12 @@ import { upper } from "../node_modules/alphabet";
 import Ship from "./Ship";
 
 const Gameboard = () => {
+  // board coordinates 
   let boardCoordinates = [];
+
+  function getBoardCoordinates() {
+    return boardCoordinates;
+  }
 
   function initCoordinates() {
     for(let i = 0; i < 10; i += 1) {
@@ -14,6 +19,7 @@ const Gameboard = () => {
     }
   }
 
+  // ship data
   let shipData = [];
 
   function getShipData() {
@@ -24,18 +30,21 @@ const Gameboard = () => {
     shipData.push({ position, token });
   }
 
+  // coordinates with ships
   let coordinatesWithShips = [];
 
   function getCoordinatesWithShips() {
     return coordinatesWithShips;
   }
 
+  // coordinates without ships that have been attacked
   let missedShots = [];
 
   function getMissedShots() {
     return missedShots;
   }
 
+  // coordinate validation methods
   function processCoordinates(setOfCoordinates) {
     if(!Array.isArray(setOfCoordinates)) {
       return [setOfCoordinates];
@@ -100,6 +109,7 @@ const Gameboard = () => {
     return validSequence;
   }
 
+  // place ship
   function placeShip(coordinate, length = 1) {
     let processedCoordinates = processCoordinates(coordinate);
     if(processedCoordinates.length !== length) {
@@ -121,6 +131,7 @@ const Gameboard = () => {
     floatingShips += 1;
   }
 
+  // received attack
   function receivedAttack(coordinate) {
     if(!coordinatesWithShips.includes(coordinate)) {
       if(!missedShots.includes(coordinate)) {
@@ -137,15 +148,18 @@ const Gameboard = () => {
     })
   }
 
+  // floating ships
   let floatingShips = 0;
 
   function getFloatingShips() {
     return floatingShips;
   }
 
+  // on init
   initCoordinates();
 
   return {
+    getBoardCoordinates,
     getShipData,
     getCoordinatesWithShips,
     getMissedShots,
