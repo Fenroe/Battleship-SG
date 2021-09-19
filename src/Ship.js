@@ -1,26 +1,27 @@
 const Ship = (length) => {
+  // length
   function getLength() {
-    if(length < 1) {
-      return 1;
-    } else {
-      return length;
-    }  
+    return length;
   }
 
+  function initLength() {
+    if(length < 1) {
+      length = 1;
+    }
+  }
+
+  // lives
   let lives = length;
 
   function initLives() {
-    if(length < 1) {
-      lives = 1;
-    } else {
-      lives = length;
-    }
+    lives = length;
   }
 
   function getLives() {
     return lives;
   }
 
+  // ship segments
   let shipSegments = [];
 
   function initShipSegments() {
@@ -29,6 +30,7 @@ const Ship = (length) => {
     }
   }
 
+  // hit
   function isHit(target) {
     if(target > length || target < 1) {
       return;
@@ -43,12 +45,15 @@ const Ship = (length) => {
     }  
   }
 
+  // sunk
   let sunk = false;
 
   function isSunk() {
     return sunk;
   }
 
+  // run on creation
+  initLength();
   initLives();
   initShipSegments();
 
