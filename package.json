@@ -1,0 +1,31 @@
+{
+  "name": "battleship-sg",
+  "version": "1.0.0",
+  "description": "Battleship game created with Javascript and utilising TDD methodology",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest",
+    "build": "webpack"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Fenroe/Battleship-SG.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Fenroe/Battleship-SG/issues"
+  },
+  "homepage": "https://github.com/Fenroe/Battleship-SG#readme",
+  "devDependencies": {
+    "@babel/preset-env": "^7.15.6",
+    "css-loader": "^6.3.0",
+    "csv-loader": "^3.0.3",
+    "jest": "^27.2.0",
+    "style-loader": "^3.2.1",
+    "webpack": "^5.53.0",
+    "webpack-cli": "^4.8.0",
+    "xml-loader": "^1.2.1"
+  }
+}
