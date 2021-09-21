@@ -1,23 +1,27 @@
 import Gameboard from "./Gameboard";
 
 const Player = (controller = 'Computer') => {
+  // return controller
   function getController() {
     return controller;
   }
 
+  // board
   let board = Gameboard();
 
   function getBoard() {
     return board;
   }
 
+  // previous attacks
   let previousAttacks = [];
 
   function getPreviousAttacks() {
     return previousAttacks;
   }
 
-  function attack(opponent, target) {
+  // launch attack
+  function attack(opponent, target, callback, callbackTwo, player = this) {
     if(!board.getBoardCoordinates().includes(target)) {
       return;
     }
@@ -26,24 +30,25 @@ const Player = (controller = 'Computer') => {
     }
     opponent.getBoard().receivedAttack(target);
     previousAttacks.push(target);
-    opponent.setTurn(this);
+    callback();
+    callbackTwo();
+    console.log(board.getFloatingShips());
+    opponent.setTurn(player, callback, callbackTwo);
   }
 
-  let takingTurn = false;
-
-  function computerAttack(opponent) {
+  // AI attack functions
+  function computerAttack(opponent, callback, callbackTwo) {
     let index = Math.floor(Math.random() * 100);
     if(!previousAttacks.includes(board.getBoardCoordinates()[index])) {
-      attack(opponent, board.getBoardCoordinates()[index]);
+      attack(opponent, board.getBoardCoordinates()[index], callback, callbackTwo);
     } else {
-      computerAttack(opponent);
+      computerAttack(opponent, callback, callbackTwo);
     }
   }
 
-  function setTurn(opponent) {
-    takingTurn = true;
+  function setTurn(opponent, callback, callbackTwo) {
     if(controller === 'Computer') {
-      computerAttack(opponent);
+      computerAttack(opponent, callback, callbackTwo);
     }
   }
 

@@ -44,6 +44,12 @@ const Gameboard = () => {
     return missedShots;
   }
 
+  let attackedCoordinates = [];
+
+  function getAttackedCoordinates() {
+    return attackedCoordinates;
+  }
+
   // coordinate validation methods
   function processCoordinates(setOfCoordinates) {
     if(!Array.isArray(setOfCoordinates)) {
@@ -100,7 +106,7 @@ const Gameboard = () => {
     let validSequence = true;
     const coordinatesIndexes = setOfCoordinates.map(coordinate => boardCoordinates.indexOf(coordinate));
     const n = 10 - coordinatesIndexes.length;
-    if(coordinatesIndexes[0] % 10 > n) {
+    if(coordinatesIndexes[0] % 10 > n && parseSequence(coordinatesIndexes, 1) === true) {
       validSequence = false;
     }
     if(parseSequence(coordinatesIndexes, 1) === false && parseSequence(coordinatesIndexes, 10) === false) {
@@ -133,6 +139,9 @@ const Gameboard = () => {
 
   // received attack
   function receivedAttack(coordinate) {
+    if(!attackedCoordinates.includes(coordinate)) {
+      attackedCoordinates.push(coordinate);
+    }
     if(!coordinatesWithShips.includes(coordinate)) {
       if(!missedShots.includes(coordinate)) {
         missedShots.push(coordinate);
@@ -143,7 +152,9 @@ const Gameboard = () => {
       if(ship.position.includes(coordinate)) {
         const index = ship.position.indexOf(coordinate) + 1;
         ship.token.isHit(index);
-        floatingShips -= 1;
+        if(ship.token.isSunk()) {
+          floatingShips -= 1;
+        }
       }
     })
   }
@@ -163,6 +174,7 @@ const Gameboard = () => {
     getShipData,
     getCoordinatesWithShips,
     getMissedShots,
+    getAttackedCoordinates,
     placeShip,
     receivedAttack,
     getFloatingShips
