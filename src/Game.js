@@ -2,9 +2,14 @@ import Player from "./Player";
 import UI from "./UI";
 
 const Game = (() => {
-  const player = Player('Player');
+  let player = Player('Player');
 
-  const computer = Player();
+  let computer = Player();
+
+  function preGame() {
+    UI.makePreGameScreen();
+    UI.initStartGameButton(startGame);
+  }
 
   function placeAllShips() {
     player.getBoard().placeShip(['C3', 'D3', 'E3', 'F3', 'G3'], 5);
@@ -33,7 +38,8 @@ const Game = (() => {
     )
   }
 
-  function startGame() {
+  function startGame(playerName) {
+    setPlayers(playerName);
     UI.makeBoards(player.getBoard().getBoardCoordinates());
     placeAllShips();
     UI.colourOccupiedTiles(player.getBoard().getCoordinatesWithShips());
@@ -44,15 +50,19 @@ const Game = (() => {
   function checkForWinner() {
     if(player.getBoard().getFloatingShips() === 0) {
       UI.makePostGameScreen(computer.getController());
+      UI.initPlayAgainButton(preGame);
     }
     if(computer.getBoard().getFloatingShips() === 0) {
-      UI.makePostGameScreen(player.getController());
+      UI.makePostGameScreen(player.getController()); 
+      UI.initPlayAgainButton(preGame);    
     }
+    
   }
 
   return {
     player,
     computer,
+    preGame,
     placeAllShips,
     startGame,
   }

@@ -2,12 +2,32 @@ const UI = (() => {
   const content = document.getElementById('content');
 
   function makePreGameScreen() {
+    content.innerHTML = '';
     const preGameContainer = document.createElement('div');
     preGameContainer.classList.add('pre-game-container');
     const playerNameLabel = document.createElement('label');
     playerNameLabel.classList.add('player-name-label');
     const playerNameInput = document.createElement('input');
     playerNameInput.classList.add('player-name-input');
+    const startGameButton = document.createElement('button');
+    startGameButton.classList.add('start-game-button');
+    startGameButton.textContent = 'Start Game';
+    preGameContainer.append(playerNameLabel);
+    preGameContainer.append(playerNameInput);
+    preGameContainer.append(startGameButton);
+    content.append(preGameContainer);
+  }
+
+  function initStartGameButton(callback) {
+    const button = document.querySelector('.start-game-button');
+    button.addEventListener('click', () => {
+      const nameInput = document.querySelector('.player-name-input').value;
+      if(!nameInput) {
+        return;
+      } else {
+        callback(nameInput);
+      }
+    })
   }
 
   // game in progress
@@ -26,6 +46,7 @@ const UI = (() => {
   }
 
   function makeBoards(tiles) {
+    content.innerHTML = '';
     const boardContainer = document.createElement('div');
     boardContainer.classList.add('game-board-container');
     boardContainer.append(makePlayerBoard(tiles, 'player-one'));
@@ -82,17 +103,30 @@ const UI = (() => {
     const postGameHeading = document.createElement('div');
     postGameHeading.classList.add('post-game-heading');
     postGameHeading.textContent = `The Winner Is ${winner}`;
+    const playAgainButton = document.createElement('button');
+    playAgainButton.classList.add('play-again-button');
+    playAgainButton.textContent = 'Play Again';
     postGameContainer.append(postGameHeading);
+    postGameContainer.append(playAgainButton);
     content.append(postGameContainer);
+  }
 
+  function initPlayAgainButton(callback) {
+    const button = document.querySelector('.play-again-button');
+    button.addEventListener('click', () => {
+      callback();
+    })
   }
 
   return {
+    makePreGameScreen,
+    initStartGameButton,
     makeBoards,
     initTiles,
     colourOccupiedTiles,
     updateAllTiles,
-    makePostGameScreen
+    makePostGameScreen,
+    initPlayAgainButton,
   }
 })()
 
